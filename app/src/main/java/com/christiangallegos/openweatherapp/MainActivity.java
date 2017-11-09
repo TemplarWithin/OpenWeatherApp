@@ -40,14 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Creamos una instancia del Google Api Client
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                         @Override
                         public void onConnected(Bundle bundle) {
-                            //Aqui ya nos conectamos al Servicio del Api de Google
-                            //Podemos solicitar la ubicacion, este metodo esta definido abajo
                             getLocation();
                         }
                         @Override
@@ -59,17 +56,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*Solicita la ubicacion mediante GPS. Primero se tiene que verificar que el usuario otorgue los permisos.*/
     private void getLocation(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //La primera vez que se ejecuta la actividad, se solicitan permisos
-            //Si el usuario selecciono ok, o cancel en la ventana de permisos se mandara el resultado a onRequestPermissionsResult. Este metodo
-            //se define abajo
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             return;
         }
-        //Aqui, ya tenemos permisos
-        //Iniciamos
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);
@@ -91,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             }
-            //Tenemos permisos
             getLocation();
         } else {
             // Permission was denied. Display an error message.
@@ -127,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         latitude_weather.setText("" + newLocation.latitude +" \u00b0");
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.10.5.72/Clima2/?var1="+newLocation.latitude+"&var2="+newLocation.longitude;
-        
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
