@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
         final TextView temperature_weather = (TextView)findViewById(R.id.temperature_weather);
         final TextView latitude_weather = (TextView)findViewById(R.id.latitude_weather);
         final TextView longitude_weather = (TextView)findViewById(R.id.longitude_weather);
-
         longitude_weather.setText("" + newLocation.longitude +" \u00b0");
         latitude_weather.setText("" + newLocation.latitude +" \u00b0");
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.10.5.72/Clima2/?var1="+newLocation.latitude+"&var2="+newLocation.longitude;
 
